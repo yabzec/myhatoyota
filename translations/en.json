@@ -1,0 +1,22 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Toyota",
+        "description": "Enter your Toyota Connected Services credentials.",
+        "data": {
+          "email": "Email Address",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_username": "Invalid email address format.",
+      "invalid_auth": "Invalid credentials. Check your email and password.",
+      "cannot_connect": "Failed to connect to Toyota services. Try again later."
+    },
+    "abort": {
+      "already_configured": "This Toyota account is already configured."
+    }
+  }
+}
