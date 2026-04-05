@@ -24,7 +24,6 @@ mytoyota/
 ├── sensor.py            # 51 sensor entities (dashboard, trips, service)
 ├── binary_sensor.py     # 9 binary sensors (doors, windows, hood)
 ├── lock.py              # 2 lock entities (doors, trunk)
-├── climate.py           # 1 climate entity (remote AC/heat)
 ├── device_tracker.py    # 1 GPS tracker entity
 ├── strings.json         # Config flow UI strings
 └── translations/en.json # English translations

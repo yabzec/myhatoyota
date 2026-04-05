@@ -18,5 +18,207 @@
     "abort": {
       "already_configured": "This Toyota account is already configured."
     }
+  },
+  "entity": {
+    "device_tracker": {
+      "location": {
+        "name": "Location"
+      }
+    },
+    "sensor": {
+      "odometer": {
+        "name": "Odometer"
+      },
+      "fuel_level": {
+        "name": "Fuel Level"
+      },
+      "fuel_range": {
+        "name": "Fuel Range"
+      },
+      "battery_level": {
+        "name": "HV Battery Level"
+      },
+      "battery_range": {
+        "name": "EV Range"
+      },
+      "battery_range_with_ac": {
+        "name": "EV Range With AC"
+      },
+      "total_range": {
+        "name": "Total Range"
+      },
+      "day_distance": {
+        "name": "Today Distance"
+      },
+      "day_fuel_consumed": {
+        "name": "Today Fuel Consumed"
+      },
+      "day_avg_fuel_consumed": {
+        "name": "Today Avg Fuel Consumed"
+      },
+      "day_ev_distance": {
+        "name": "Today EV Distance"
+      },
+      "day_ev_duration": {
+        "name": "Today EV Duration"
+      },
+      "day_average_speed": {
+        "name": "Today Average Speed"
+      },
+      "week_distance": {
+        "name": "This Week Distance"
+      },
+      "week_fuel_consumed": {
+        "name": "This Week Fuel Consumed"
+      },
+      "week_avg_fuel_consumed": {
+        "name": "This Week Avg Fuel Consumed"
+      },
+      "week_ev_distance": {
+        "name": "This Week EV Distance"
+      },
+      "week_ev_duration": {
+        "name": "This Week EV Duration"
+      },
+      "week_average_speed": {
+        "name": "This Week Average Speed"
+      },
+      "month_distance": {
+        "name": "This Month Distance"
+      },
+      "month_fuel_consumed": {
+        "name": "This Month Fuel Consumed"
+      },
+      "month_avg_fuel_consumed": {
+        "name": "This Month Avg Fuel Consumed"
+      },
+      "month_ev_distance": {
+        "name": "This Month EV Distance"
+      },
+      "month_ev_duration": {
+        "name": "This Month EV Duration"
+      },
+      "month_average_speed": {
+        "name": "This Month Average Speed"
+      },
+      "year_distance": {
+        "name": "This Year Distance"
+      },
+      "year_fuel_consumed": {
+        "name": "This Year Fuel Consumed"
+      },
+      "year_avg_fuel_consumed": {
+        "name": "This Year Avg Fuel Consumed"
+      },
+      "year_ev_distance": {
+        "name": "This Year EV Distance"
+      },
+      "year_ev_duration": {
+        "name": "This Year EV Duration"
+      },
+      "year_average_speed": {
+        "name": "This Year Average Speed"
+      },
+      "last_trip_distance": {
+        "name": "Last Trip Distance"
+      },
+      "last_trip_fuel_consumed": {
+        "name": "Last Trip Fuel Consumed"
+      },
+      "last_trip_avg_fuel": {
+        "name": "Last Trip Avg Fuel Consumed"
+      },
+      "last_trip_ev_distance": {
+        "name": "Last Trip EV Distance"
+      },
+      "last_trip_ev_duration": {
+        "name": "Last Trip EV Duration"
+      },
+      "last_trip_score": {
+        "name": "Last Trip Score"
+      },
+      "last_trip_score_acceleration": {
+        "name": "Last Trip Acceleration Score"
+      },
+      "last_trip_score_braking": {
+        "name": "Last Trip Braking Score"
+      },
+      "last_trip_score_advice": {
+        "name": "Last Trip Advice Score"
+      },
+      "last_trip_score_constant_speed": {
+        "name": "Last Trip Constant Speed Score"
+      },
+      "last_trip_start": {
+        "name": "Last Trip Start"
+      },
+      "last_trip_end": {
+        "name": "Last Trip End"
+      },
+      "last_service_date": {
+        "name": "Last Service Date"
+      },
+      "last_service_odometer": {
+        "name": "Last Service Odometer"
+      },
+      "last_service_category": {
+        "name": "Last Service Category"
+      },
+      "last_service_provider": {
+        "name": "Last Service Provider"
+      },
+      "last_service_notes": {
+        "name": "Last Service Notes"
+      },
+      "unread_notifications": {
+        "name": "Unread Notifications"
+      },
+      "vehicle_type": {
+        "name": "Vehicle Type"
+      },
+      "vehicle_alias": {
+        "name": "Vehicle Alias"
+      }
+    },
+    "binary_sensor": {
+      "door_driver": {
+        "name": "Driver Door"
+      },
+      "door_driver_rear": {
+        "name": "Driver Rear Door"
+      },
+      "door_passenger": {
+        "name": "Passenger Door"
+      },
+      "door_passenger_rear": {
+        "name": "Passenger Rear Door"
+      },
+      "door_trunk": {
+        "name": "Trunk"
+      },
+      "hood": {
+        "name": "Hood"
+      },
+      "window_driver": {
+        "name": "Driver Window"
+      },
+      "window_driver_rear": {
+        "name": "Driver Rear Window"
+      },
+      "window_passenger": {
+        "name": "Passenger Window"
+      },
+      "window_passenger_rear": {
+        "name": "Passenger Rear Window"
+      }
+    },
+    "lock": {
+      "doors": {
+        "name": "Doors"
+      },
+      "trunk": {
+        "name": "Trunk"
+      }
+    }
   }
 }

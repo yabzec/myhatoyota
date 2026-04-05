@@ -20,6 +20,18 @@ from .coordinator import ToyotaCoordinatorData, ToyotaDataUpdateCoordinator
 PARALLEL_UPDATES = 0
 
 
+def _closed_to_is_on(closed: Any) -> bool | None:
+    """Convert a pytoyoda 'closed' value to a binary sensor is_on value.
+
+    Returns True (open/alert) when closed is explicitly False.
+    Returns None when the value is None or unavailable — prevents None being
+    treated as falsy and incorrectly showing the sensor as open.
+    """
+    if closed is None:
+        return False
+    return not closed
+
+
 @dataclass(frozen=True, kw_only=True)
 class ToyotaBinarySensorEntityDescription(BinarySensorEntityDescription):
     """Extends BinarySensorEntityDescription with a value_fn.
@@ -34,50 +46,50 @@ BINARY_SENSOR_DESCRIPTIONS: tuple[ToyotaBinarySensorEntityDescription, ...] = (
     # ---- Doors (is_on = True → door is OPEN) --------------------------------
     ToyotaBinarySensorEntityDescription(
         key="door_driver",
-        name="Driver Door",
+        translation_key="door_driver",
         device_class=BinarySensorDeviceClass.DOOR,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.doors.driver_seat.closed
+            _closed_to_is_on(d.vehicle.lock_status.doors.driver_seat.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.doors and d.vehicle.lock_status.doors.driver_seat
             else None
         ),
     ),
     ToyotaBinarySensorEntityDescription(
         key="door_driver_rear",
-        name="Driver Rear Door",
+        translation_key="door_driver_rear",
         device_class=BinarySensorDeviceClass.DOOR,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.doors.driver_rear_seat.closed
+            _closed_to_is_on(d.vehicle.lock_status.doors.driver_rear_seat.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.doors and d.vehicle.lock_status.doors.driver_rear_seat
             else None
         ),
     ),
     ToyotaBinarySensorEntityDescription(
         key="door_passenger",
-        name="Passenger Door",
+        translation_key="door_passenger",
         device_class=BinarySensorDeviceClass.DOOR,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.doors.passenger_seat.closed
+            _closed_to_is_on(d.vehicle.lock_status.doors.passenger_seat.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.doors and d.vehicle.lock_status.doors.passenger_seat
             else None
         ),
     ),
     ToyotaBinarySensorEntityDescription(
         key="door_passenger_rear",
-        name="Passenger Rear Door",
+        translation_key="door_passenger_rear",
         device_class=BinarySensorDeviceClass.DOOR,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.doors.passenger_rear_seat.closed
+            _closed_to_is_on(d.vehicle.lock_status.doors.passenger_rear_seat.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.doors and d.vehicle.lock_status.doors.passenger_rear_seat
             else None
         ),
     ),
     ToyotaBinarySensorEntityDescription(
         key="door_trunk",
-        name="Trunk",
+        translation_key="door_trunk",
         device_class=BinarySensorDeviceClass.DOOR,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.doors.trunk.closed
+            _closed_to_is_on(d.vehicle.lock_status.doors.trunk.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.doors and d.vehicle.lock_status.doors.trunk
             else None
         ),
@@ -85,10 +97,10 @@ BINARY_SENSOR_DESCRIPTIONS: tuple[ToyotaBinarySensorEntityDescription, ...] = (
     # ---- Hood (is_on = True → hood is OPEN) ---------------------------------
     ToyotaBinarySensorEntityDescription(
         key="hood",
-        name="Hood",
+        translation_key="hood",
         device_class=BinarySensorDeviceClass.DOOR,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.hood.closed
+            _closed_to_is_on(d.vehicle.lock_status.hood.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.hood
             else None
         ),
@@ -96,40 +108,40 @@ BINARY_SENSOR_DESCRIPTIONS: tuple[ToyotaBinarySensorEntityDescription, ...] = (
     # ---- Windows (is_on = True → window is OPEN) ----------------------------
     ToyotaBinarySensorEntityDescription(
         key="window_driver",
-        name="Driver Window",
+        translation_key="window_driver",
         device_class=BinarySensorDeviceClass.WINDOW,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.windows.driver_seat.closed
+            _closed_to_is_on(d.vehicle.lock_status.windows.driver_seat.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.windows and d.vehicle.lock_status.windows.driver_seat
             else None
         ),
     ),
     ToyotaBinarySensorEntityDescription(
         key="window_driver_rear",
-        name="Driver Rear Window",
+        translation_key="window_driver_rear",
         device_class=BinarySensorDeviceClass.WINDOW,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.windows.driver_rear_seat.closed
+            _closed_to_is_on(d.vehicle.lock_status.windows.driver_rear_seat.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.windows and d.vehicle.lock_status.windows.driver_rear_seat
             else None
         ),
     ),
     ToyotaBinarySensorEntityDescription(
         key="window_passenger",
-        name="Passenger Window",
+        translation_key="window_passenger",
         device_class=BinarySensorDeviceClass.WINDOW,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.windows.passenger_seat.closed
+            _closed_to_is_on(d.vehicle.lock_status.windows.passenger_seat.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.windows and d.vehicle.lock_status.windows.passenger_seat
             else None
         ),
     ),
     ToyotaBinarySensorEntityDescription(
         key="window_passenger_rear",
-        name="Passenger Rear Window",
+        translation_key="window_passenger_rear",
         device_class=BinarySensorDeviceClass.WINDOW,
         value_fn=lambda d: (
-            not d.vehicle.lock_status.windows.passenger_rear_seat.closed
+            _closed_to_is_on(d.vehicle.lock_status.windows.passenger_rear_seat.closed)
             if d.vehicle.lock_status and d.vehicle.lock_status.windows and d.vehicle.lock_status.windows.passenger_rear_seat
             else None
         ),

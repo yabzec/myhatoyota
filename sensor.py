@@ -53,7 +53,7 @@ def _timedelta_to_minutes(td: timedelta | None) -> float | None:
 _DASHBOARD_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ToyotaSensorEntityDescription(
         key="odometer",
-        name="Odometer",
+        translation_key="odometer",
         native_unit_of_measurement=UnitOfLength.KILOMETERS,
         device_class=SensorDeviceClass.DISTANCE,
         state_class=SensorStateClass.TOTAL_INCREASING,
@@ -62,16 +62,16 @@ _DASHBOARD_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="fuel_level",
-        name="Fuel Level",
+        translation_key="fuel_level",
         native_unit_of_measurement=PERCENTAGE,
-        device_class=SensorDeviceClass.BATTERY,
         state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.BATTERY,
         icon="mdi:gas-station",
         value_fn=lambda d: d.vehicle.dashboard.fuel_level if d.vehicle.dashboard else None,
     ),
     ToyotaSensorEntityDescription(
         key="fuel_range",
-        name="Fuel Range",
+        translation_key="fuel_range",
         native_unit_of_measurement=UnitOfLength.KILOMETERS,
         device_class=SensorDeviceClass.DISTANCE,
         state_class=SensorStateClass.MEASUREMENT,
@@ -80,7 +80,7 @@ _DASHBOARD_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="battery_level",
-        name="HV Battery Level",
+        translation_key="battery_level",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
         state_class=SensorStateClass.MEASUREMENT,
@@ -89,7 +89,7 @@ _DASHBOARD_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="battery_range",
-        name="EV Range",
+        translation_key="battery_range",
         native_unit_of_measurement=UnitOfLength.KILOMETERS,
         device_class=SensorDeviceClass.DISTANCE,
         state_class=SensorStateClass.MEASUREMENT,
@@ -98,7 +98,7 @@ _DASHBOARD_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="battery_range_with_ac",
-        name="EV Range With AC",
+        translation_key="battery_range_with_ac",
         native_unit_of_measurement=UnitOfLength.KILOMETERS,
         device_class=SensorDeviceClass.DISTANCE,
         state_class=SensorStateClass.MEASUREMENT,
@@ -107,7 +107,7 @@ _DASHBOARD_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="total_range",
-        name="Total Range",
+        translation_key="total_range",
         native_unit_of_measurement=UnitOfLength.KILOMETERS,
         device_class=SensorDeviceClass.DISTANCE,
         state_class=SensorStateClass.MEASUREMENT,
@@ -124,7 +124,7 @@ def _make_summary_sensors(prefix: str, label: str, attr: str) -> tuple[ToyotaSen
     return (
         ToyotaSensorEntityDescription(
             key=f"{prefix}_distance",
-            name=f"{label} Distance",
+            translation_key=f"{prefix}_distance",
             native_unit_of_measurement=UnitOfLength.KILOMETERS,
             device_class=SensorDeviceClass.DISTANCE,
             state_class=SensorStateClass.MEASUREMENT,
@@ -133,7 +133,7 @@ def _make_summary_sensors(prefix: str, label: str, attr: str) -> tuple[ToyotaSen
         ),
         ToyotaSensorEntityDescription(
             key=f"{prefix}_fuel_consumed",
-            name=f"{label} Fuel Consumed",
+            translation_key=f"{prefix}_fuel_consumed",
             native_unit_of_measurement=UnitOfVolume.LITERS,
             device_class=SensorDeviceClass.VOLUME,
             state_class=SensorStateClass.TOTAL,
@@ -142,7 +142,7 @@ def _make_summary_sensors(prefix: str, label: str, attr: str) -> tuple[ToyotaSen
         ),
         ToyotaSensorEntityDescription(
             key=f"{prefix}_avg_fuel_consumed",
-            name=f"{label} Avg Fuel Consumed",
+            translation_key=f"{prefix}_avg_fuel_consumed",
             native_unit_of_measurement=UNIT_L_PER_100KM,
             state_class=SensorStateClass.MEASUREMENT,
             icon="mdi:gauge",
@@ -150,7 +150,7 @@ def _make_summary_sensors(prefix: str, label: str, attr: str) -> tuple[ToyotaSen
         ),
         ToyotaSensorEntityDescription(
             key=f"{prefix}_ev_distance",
-            name=f"{label} EV Distance",
+            translation_key=f"{prefix}_ev_distance",
             native_unit_of_measurement=UnitOfLength.KILOMETERS,
             device_class=SensorDeviceClass.DISTANCE,
             state_class=SensorStateClass.MEASUREMENT,
@@ -159,7 +159,7 @@ def _make_summary_sensors(prefix: str, label: str, attr: str) -> tuple[ToyotaSen
         ),
         ToyotaSensorEntityDescription(
             key=f"{prefix}_ev_duration",
-            name=f"{label} EV Duration",
+            translation_key=f"{prefix}_ev_duration",
             native_unit_of_measurement=UnitOfTime.MINUTES,
             device_class=SensorDeviceClass.DURATION,
             state_class=SensorStateClass.MEASUREMENT,
@@ -168,7 +168,7 @@ def _make_summary_sensors(prefix: str, label: str, attr: str) -> tuple[ToyotaSen
         ),
         ToyotaSensorEntityDescription(
             key=f"{prefix}_average_speed",
-            name=f"{label} Average Speed",
+            translation_key=f"{prefix}_average_speed",
             native_unit_of_measurement=UnitOfSpeed.KILOMETERS_PER_HOUR,
             device_class=SensorDeviceClass.SPEED,
             state_class=SensorStateClass.MEASUREMENT,
@@ -191,7 +191,7 @@ _SUMMARY_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
 _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ToyotaSensorEntityDescription(
         key="last_trip_distance",
-        name="Last Trip Distance",
+        translation_key="last_trip_distance",
         native_unit_of_measurement=UnitOfLength.KILOMETERS,
         device_class=SensorDeviceClass.DISTANCE,
         state_class=SensorStateClass.MEASUREMENT,
@@ -200,7 +200,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_fuel_consumed",
-        name="Last Trip Fuel Consumed",
+        translation_key="last_trip_fuel_consumed",
         native_unit_of_measurement=UnitOfVolume.LITERS,
         device_class=SensorDeviceClass.VOLUME,
         state_class=SensorStateClass.MEASUREMENT,
@@ -209,7 +209,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_avg_fuel",
-        name="Last Trip Avg Fuel Consumed",
+        translation_key="last_trip_avg_fuel",
         native_unit_of_measurement=UNIT_L_PER_100KM,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:gauge",
@@ -217,7 +217,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_ev_distance",
-        name="Last Trip EV Distance",
+        translation_key="last_trip_ev_distance",
         native_unit_of_measurement=UnitOfLength.KILOMETERS,
         device_class=SensorDeviceClass.DISTANCE,
         state_class=SensorStateClass.MEASUREMENT,
@@ -226,7 +226,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_ev_duration",
-        name="Last Trip EV Duration",
+        translation_key="last_trip_ev_duration",
         native_unit_of_measurement=UnitOfTime.MINUTES,
         device_class=SensorDeviceClass.DURATION,
         state_class=SensorStateClass.MEASUREMENT,
@@ -235,7 +235,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_score",
-        name="Last Trip Score",
+        translation_key="last_trip_score",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:star",
@@ -243,7 +243,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_score_acceleration",
-        name="Last Trip Acceleration Score",
+        translation_key="last_trip_score_acceleration",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:car-speed-limiter",
@@ -251,7 +251,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_score_braking",
-        name="Last Trip Braking Score",
+        translation_key="last_trip_score_braking",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:car-brake-alert",
@@ -259,7 +259,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_score_advice",
-        name="Last Trip Advice Score",
+        translation_key="last_trip_score_advice",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:lightbulb",
@@ -267,7 +267,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_score_constant_speed",
-        name="Last Trip Constant Speed Score",
+        translation_key="last_trip_score_constant_speed",
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:speedometer",
@@ -275,14 +275,14 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_start",
-        name="Last Trip Start",
+        translation_key="last_trip_start",
         device_class=SensorDeviceClass.TIMESTAMP,
         icon="mdi:clock-start",
         value_fn=lambda d: d.last_trip.start_time if d.last_trip else None,
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_end",
-        name="Last Trip End",
+        translation_key="last_trip_end",
         device_class=SensorDeviceClass.TIMESTAMP,
         icon="mdi:clock-end",
         value_fn=lambda d: d.last_trip.end_time if d.last_trip else None,
@@ -295,14 +295,14 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
 _SERVICE_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ToyotaSensorEntityDescription(
         key="last_service_date",
-        name="Last Service Date",
+        translation_key="last_service_date",
         device_class=SensorDeviceClass.DATE,
         icon="mdi:wrench-clock",
         value_fn=lambda d: d.service_history.service_date if d.service_history else None,
     ),
     ToyotaSensorEntityDescription(
         key="last_service_odometer",
-        name="Last Service Odometer",
+        translation_key="last_service_odometer",
         native_unit_of_measurement=UnitOfLength.KILOMETERS,
         device_class=SensorDeviceClass.DISTANCE,
         state_class=SensorStateClass.MEASUREMENT,
@@ -311,19 +311,19 @@ _SERVICE_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="last_service_category",
-        name="Last Service Category",
+        translation_key="last_service_category",
         icon="mdi:tag",
         value_fn=lambda d: d.service_history.service_category if d.service_history else None,
     ),
     ToyotaSensorEntityDescription(
         key="last_service_provider",
-        name="Last Service Provider",
+        translation_key="last_service_provider",
         icon="mdi:store",
         value_fn=lambda d: d.service_history.service_provider if d.service_history else None,
     ),
     ToyotaSensorEntityDescription(
         key="last_service_notes",
-        name="Last Service Notes",
+        translation_key="last_service_notes",
         icon="mdi:note-text",
         value_fn=lambda d: d.service_history.notes if d.service_history else None,
     ),
@@ -335,7 +335,7 @@ _SERVICE_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
 _MISC_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ToyotaSensorEntityDescription(
         key="unread_notifications",
-        name="Unread Notifications",
+        translation_key="unread_notifications",
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:bell-alert",
         value_fn=lambda d: sum(
@@ -344,13 +344,13 @@ _MISC_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
     ),
     ToyotaSensorEntityDescription(
         key="vehicle_type",
-        name="Vehicle Type",
+        translation_key="vehicle_type",
         icon="mdi:car-info",
         value_fn=lambda d: d.vehicle.type,
     ),
     ToyotaSensorEntityDescription(
         key="vehicle_alias",
-        name="Vehicle Alias",
+        translation_key="vehicle_alias",
         icon="mdi:tag-text",
         value_fn=lambda d: d.vehicle.alias,
     ),

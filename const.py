@@ -3,14 +3,14 @@ from __future__ import annotations
 
 from homeassistant.const import Platform
 
-DOMAIN = "toyota_custom"
+DOMAIN = "myhatoyota"
 
 PLATFORMS: list[Platform] = [
+    Platform.BUTTON,
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
     Platform.DEVICE_TRACKER,
     Platform.LOCK,
-    Platform.CLIMATE,
 ]
 
 CONF_EMAIL = "email"

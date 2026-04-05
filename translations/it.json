@@ -1,0 +1,224 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connetti a Toyota",
+        "description": "Inserisci le credenziali di Toyota Connected Services.",
+        "data": {
+          "email": "Indirizzo Email",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_username": "Formato email non valido.",
+      "invalid_auth": "Credenziali non corrette. Controlla email e password.",
+      "cannot_connect": "Impossibile connettersi ai servizi Toyota. Riprova più tardi."
+    },
+    "abort": {
+      "already_configured": "Questo account Toyota è già configurato."
+    }
+  },
+  "entity": {
+    "device_tracker": {
+      "location": {
+        "name": "Posizione"
+      }
+    },
+    "sensor": {
+      "odometer": {
+        "name": "Odometro"
+      },
+      "fuel_level": {
+        "name": "Livello Carburante"
+      },
+      "fuel_range": {
+        "name": "Percorrenza con Carburante"
+      },
+      "battery_level": {
+        "name": "Livello Batteria HV"
+      },
+      "battery_range": {
+        "name": "Percorrenza a Batteria"
+      },
+      "battery_range_with_ac": {
+        "name": "Percorrenza a Batteria con AC"
+      },
+      "total_range": {
+        "name": "Percorrenza Totale"
+      },
+      "day_distance": {
+        "name": "Distanza Oggi"
+      },
+      "day_fuel_consumed": {
+        "name": "Carburante Consumato Oggi"
+      },
+      "day_avg_fuel_consumed": {
+        "name": "Consumo Medio Oggi"
+      },
+      "day_ev_distance": {
+        "name": "Distanza EV Oggi"
+      },
+      "day_ev_duration": {
+        "name": "Durata EV Oggi"
+      },
+      "day_average_speed": {
+        "name": "Velocità Media Oggi"
+      },
+      "week_distance": {
+        "name": "Distanza Questa Settimana"
+      },
+      "week_fuel_consumed": {
+        "name": "Carburante Consumato Questa Settimana"
+      },
+      "week_avg_fuel_consumed": {
+        "name": "Consumo Medio Questa Settimana"
+      },
+      "week_ev_distance": {
+        "name": "Distanza EV Questa Settimana"
+      },
+      "week_ev_duration": {
+        "name": "Durata EV Questa Settimana"
+      },
+      "week_average_speed": {
+        "name": "Velocità Media Questa Settimana"
+      },
+      "month_distance": {
+        "name": "Distanza Questo Mese"
+      },
+      "month_fuel_consumed": {
+        "name": "Carburante Consumato Questo Mese"
+      },
+      "month_avg_fuel_consumed": {
+        "name": "Consumo Medio Questo Mese"
+      },
+      "month_ev_distance": {
+        "name": "Distanza EV Questo Mese"
+      },
+      "month_ev_duration": {
+        "name": "Durata EV Questo Mese"
+      },
+      "month_average_speed": {
+        "name": "Velocità Media Questo Mese"
+      },
+      "year_distance": {
+        "name": "Distanza Quest'Anno"
+      },
+      "year_fuel_consumed": {
+        "name": "Carburante Consumato Quest'Anno"
+      },
+      "year_avg_fuel_consumed": {
+        "name": "Consumo Medio Quest'Anno"
+      },
+      "year_ev_distance": {
+        "name": "Distanza EV Quest'Anno"
+      },
+      "year_ev_duration": {
+        "name": "Durata EV Quest'Anno"
+      },
+      "year_average_speed": {
+        "name": "Velocità Media Quest'Anno"
+      },
+      "last_trip_distance": {
+        "name": "Distanza Ultimo Viaggio"
+      },
+      "last_trip_fuel_consumed": {
+        "name": "Carburante Consumato Ultimo Viaggio"
+      },
+      "last_trip_avg_fuel": {
+        "name": "Consumo Medio Ultimo Viaggio"
+      },
+      "last_trip_ev_distance": {
+        "name": "Distanza EV Ultimo Viaggio"
+      },
+      "last_trip_ev_duration": {
+        "name": "Durata EV Ultimo Viaggio"
+      },
+      "last_trip_score": {
+        "name": "Punteggio Ultimo Viaggio"
+      },
+      "last_trip_score_acceleration": {
+        "name": "Punteggio Accelerazione Ultimo Viaggio"
+      },
+      "last_trip_score_braking": {
+        "name": "Punteggio Frenata Ultimo Viaggio"
+      },
+      "last_trip_score_advice": {
+        "name": "Punteggio Consigli Ultimo Viaggio"
+      },
+      "last_trip_score_constant_speed": {
+        "name": "Punteggio Velocità Costante Ultimo Viaggio"
+      },
+      "last_trip_start": {
+        "name": "Inizio Ultimo Viaggio"
+      },
+      "last_trip_end": {
+        "name": "Fine Ultimo Viaggio"
+      },
+      "last_service_date": {
+        "name": "Data Ultimo Tagliando"
+      },
+      "last_service_odometer": {
+        "name": "Chilometraggio Ultimo Tagliando"
+      },
+      "last_service_category": {
+        "name": "Categoria Ultimo Tagliando"
+      },
+      "last_service_provider": {
+        "name": "Officina Ultimo Tagliando"
+      },
+      "last_service_notes": {
+        "name": "Note Ultimo Tagliando"
+      },
+      "unread_notifications": {
+        "name": "Notifiche Non Lette"
+      },
+      "vehicle_type": {
+        "name": "Tipo Veicolo"
+      },
+      "vehicle_alias": {
+        "name": "Nome Veicolo"
+      }
+    },
+    "binary_sensor": {
+      "door_driver": {
+        "name": "Portiera Conducente"
+      },
+      "door_driver_rear": {
+        "name": "Portiera Posteriore Sinistra"
+      },
+      "door_passenger": {
+        "name": "Portiera Passeggero"
+      },
+      "door_passenger_rear": {
+        "name": "Portiera Posteriore Destra"
+      },
+      "door_trunk": {
+        "name": "Bagagliaio"
+      },
+      "hood": {
+        "name": "Cofano"
+      },
+      "window_driver": {
+        "name": "Finestrino Conducente"
+      },
+      "window_driver_rear": {
+        "name": "Finestrino Posteriore Sinistro"
+      },
+      "window_passenger": {
+        "name": "Finestrino Passeggero"
+      },
+      "window_passenger_rear": {
+        "name": "Finestrino Posteriore Destro"
+      }
+    },
+    "lock": {
+      "doors": {
+        "name": "Porte"
+      },
+      "trunk": {
+        "name": "Bagagliaio"
+      }
+    }
+  }
+}

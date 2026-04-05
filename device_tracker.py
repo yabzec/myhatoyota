@@ -18,7 +18,7 @@ PARALLEL_UPDATES = 0
 class ToyotaDeviceTracker(ToyotaBaseEntity, TrackerEntity):
     """Tracks the parking location of the vehicle via GPS."""
 
-    _attr_name = "Location"
+    _attr_translation_key = "location"
     _attr_source_type = SourceType.GPS
     _attr_icon = "mdi:car-marker"
 

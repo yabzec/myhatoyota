@@ -21,7 +21,6 @@ Platform modules        each extends ToyotaBaseEntity + HA platform entity
   sensor.py             ToyotaSensorEntity
   binary_sensor.py      ToyotaBinarySensor
   lock.py               ToyotaBaseLock → ToyotaDoorsLock / ToyotaTrunkLock
-  climate.py            ToyotaClimate
   device_tracker.py     ToyotaDeviceTracker
 ```
 
@@ -48,7 +47,7 @@ Platform modules        each extends ToyotaBaseEntity + HA platform entity
 | `ToyotaConfigEntry` | `__init__.py` | `ConfigEntry[list[ToyotaDataUpdateCoordinator]]` type alias |
 | `ToyotaCoordinatorData` | `coordinator.py` | Dataclass holding all fetched vehicle data |
 | `ToyotaDataUpdateCoordinator` | `coordinator.py` | One instance per vehicle; owns polling lifecycle |
-| `ToyotaBaseEntity` | `base_entity.py` | Shared base for all 5 platform entity types |
+| `ToyotaBaseEntity` | `base_entity.py` | Shared base for all 4 platform entity types |
 | `ToyotaSensorEntityDescription` | `sensor.py` | Extends `SensorEntityDescription` with `value_fn` callable |
 
 ## Entity Description Pattern
@@ -76,5 +75,5 @@ Factory functions (`_make_summary_sensors()`) generate repetitive sets from a si
 ## Scaling Notes
 
 - One coordinator per vehicle; supports multiple vehicles per account
-- `PARALLEL_UPDATES = 0` on command platforms (lock, climate) to prevent race conditions
+- `PARALLEL_UPDATES = 0` on command platforms (lock) to prevent race conditions
 - Data fetching is sequential, not parallelised within a coordinator

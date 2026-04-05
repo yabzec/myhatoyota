@@ -7,6 +7,8 @@ from typing import Any
 from homeassistant.components.lock import LockEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.event import async_call_later
+from pytoyoda.models.endpoints.command import CommandType
 
 from . import ToyotaConfigEntry
 from .base_entity import ToyotaBaseEntity
@@ -36,29 +38,26 @@ class ToyotaBaseLock(ToyotaBaseEntity, LockEntity):
         """Return True while an unlock command is in-flight."""
         return self._is_unlocking
 
-    async def _send(self, command: Any) -> None:
-        """Send a command and refresh coordinator data."""
-        try:
-            from pytoyoda.models.endpoints.command import CommandType  # noqa: PLC0415
-        except ImportError:
-            _LOGGER.error("pytoyoda CommandType not available")
-            return
 
+    async def _refresh_status(self, now) -> None:
+        self._is_locking = False
+        self._is_unlocking = False
+        await self.coordinator.async_request_refresh()
+
+    async def _send(self, command: CommandType) -> None:
+        """Send a command and refresh coordinator data."""
         try:
             await self.coordinator.data.vehicle.post_command(command)
         except Exception as err:  # noqa: BLE001
             _LOGGER.warning("Toyota command %s failed: %s", command, err)
         finally:
-            self._is_locking = False
-            self._is_unlocking = False
-
-        await self.coordinator.async_request_refresh()
+            async_call_later(self.hass, 20, self._refresh_status)
 
 
 class ToyotaDoorsLock(ToyotaBaseLock):
     """Lock/unlock all main doors."""
 
-    _attr_name = "Doors"
+    _attr_translation_key = "doors"
 
     def __init__(self, coordinator: ToyotaDataUpdateCoordinator) -> None:
         """Initialise the doors lock."""
@@ -83,14 +82,12 @@ class ToyotaDoorsLock(ToyotaBaseLock):
 
     async def async_lock(self, **kwargs: Any) -> None:
         """Lock all doors."""
-        from pytoyoda.models.endpoints.command import CommandType  # noqa: PLC0415
         self._is_locking = True
         self.async_write_ha_state()
         await self._send(CommandType.DOOR_LOCK)
 
     async def async_unlock(self, **kwargs: Any) -> None:
         """Unlock all doors."""
-        from pytoyoda.models.endpoints.command import CommandType  # noqa: PLC0415
         self._is_unlocking = True
         self.async_write_ha_state()
         await self._send(CommandType.DOOR_UNLOCK)
@@ -99,7 +96,7 @@ class ToyotaDoorsLock(ToyotaBaseLock):
 class ToyotaTrunkLock(ToyotaBaseLock):
     """Lock/unlock the trunk separately."""
 
-    _attr_name = "Trunk"
+    _attr_translation_key = "trunk"
 
     def __init__(self, coordinator: ToyotaDataUpdateCoordinator) -> None:
         """Initialise the trunk lock."""
@@ -116,14 +113,12 @@ class ToyotaTrunkLock(ToyotaBaseLock):
 
     async def async_lock(self, **kwargs: Any) -> None:
         """Lock the trunk."""
-        from pytoyoda.models.endpoints.command import CommandType  # noqa: PLC0415
         self._is_locking = True
         self.async_write_ha_state()
         await self._send(CommandType.TRUNK_LOCK)
 
     async def async_unlock(self, **kwargs: Any) -> None:
         """Unlock the trunk."""
-        from pytoyoda.models.endpoints.command import CommandType  # noqa: PLC0415
         self._is_unlocking = True
         self.async_write_ha_state()
         await self._send(CommandType.TRUNK_UNLOCK)
