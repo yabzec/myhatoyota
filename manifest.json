@@ -1,6 +1,6 @@
 {
-  "domain": "toyota_custom",
-  "name": "Toyota Connected Services (Custom)",
+  "domain": "myhatoyota",
+  "name": "MyToyota Home Assistant",
   "codeowners": [],
   "config_flow": true,
   "documentation": "https://github.com/pytoyoda/pytoyoda",
