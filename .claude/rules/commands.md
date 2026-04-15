@@ -1,56 +1,41 @@
-# Commands & Workflows
+# Commands & Workflow
 
-## Local Environment
+## Environment
 
-```bash
-# Activate virtual environment (already exists at .venv/)
-source .venv/bin/activate
+- Python 3.12, venv at `.venv/`
+- Activate: `source .venv/bin/activate`
+- Main dependency: `pytoyoda>=4.0.0`
+- HA core installed in venv for IDE support and type checking
 
-# Install pytoyoda for development
-pip install "pytoyoda>=4.0.0"
-```
+## Installing as a Custom Component
 
-## Installing in Home Assistant
-
-Copy the integration directory into the HA custom_components folder:
+This integration is not packaged — deploy by copying the directory into HA's custom_components:
 
 ```bash
-cp -r mytoyota/ /config/custom_components/toyota_custom/
+cp -r . <ha_config_dir>/custom_components/myhatoyota/
 ```
 
-Then restart Home Assistant and add the integration via Settings → Integrations → "+ Add" → "Toyota Connected Services (Custom)".
+Then restart Home Assistant and add the integration via UI (Settings → Integrations → Add → "MyToyota Home Assistant").
 
-The domain name in `manifest.json` determines the folder name under `custom_components/`.
+## No Build Step
 
-## No Test Suite
+Pure Python, no compilation. No Makefile, no pyproject.toml. No test suite detected.
 
-There are **no automated tests** in this repository. No `pytest`, no `tox`, no CI pipeline.
-Testing is done manually by installing the integration in a Home Assistant instance.
+## Adding a New Entity
 
-Do not assume or generate test infrastructure unless explicitly asked.
+1. Add `value_fn` lambda to the description tuple in the relevant platform file.
+2. Add `translation_key` entry to `strings.json` under the correct platform section.
+3. Mirror the key in `translations/en.json` and `translations/it.json`.
+4. `strings.json` and `translations/` must stay in sync — missing keys cause HA warnings.
 
-## No Lint/Format Config
+## Translations
 
-There is no `pyproject.toml`, `.flake8`, `ruff.toml`, or `pre-commit` config.
-Follow the implicit style described in `style.md` and use `# noqa: RULE` inline suppressions where needed.
+- `strings.json` — source of truth for HA frontend tooling
+- `translations/en.json`, `translations/it.json` — runtime files loaded by HA
+- Both must be updated together whenever a new `translation_key` is introduced
 
-## Git
+## Graphify
 
-- Remote: `git@github.com:yabzec/myhatoyota.git`
-- Main branch: `main`
-- No CI/CD workflows configured
-
-## Manifest Fields to Keep in Sync
-
-When renaming or versioning, update `manifest.json` fields:
-
-```json
-{
-  "domain": "myhatoyota",
-  "name": "MyToyota Home Assistant",
-  "requirements": ["pytoyoda>=4.0.0"],
-  "version": "1.0.0"
-}
-```
-
-The `domain` value must match the folder name under `custom_components/`.
+- First time or after structural changes: `/graphify .`
+- Incremental update after file edits: `/graphify . --update`
+- Query without rebuild: `/graphify query "<question>"`

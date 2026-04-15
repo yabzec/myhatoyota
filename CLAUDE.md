@@ -1,33 +1,14 @@
-# mytoyota — CLAUDE.md
+# mytoyota — Claude Guide
 
-Home Assistant custom integration for Toyota Connected Services.
-Connects HA to Toyota's cloud API via the `pytoyoda` library.
+Home Assistant custom integration for Toyota vehicles via the `pytoyoda` library.
+Domain: `myhatoyota` | Type: `cloud_polling` hub | Multi-vehicle support via one coordinator per VIN.
 
-## Tech Stack
+## Graph-First Rule
 
-- **Language:** Python 3.12+
-- **Framework:** Home Assistant custom integration
-- **External API:** `pytoyoda>=4.0.0` (Toyota Connected Services)
-- **Domain:** `toyota_custom`
-- **Integration type:** hub / cloud_polling
-
-## Directory Structure
-
-```
-mytoyota/
-├── __init__.py          # Entry point: setup/unload config entry
-├── const.py             # All constants (domain, platforms, intervals)
-├── manifest.json        # HA integration metadata + requirements
-├── coordinator.py       # DataUpdateCoordinator per vehicle (polling)
-├── base_entity.py       # ToyotaBaseEntity shared by all platforms
-├── config_flow.py       # User credential config UI
-├── sensor.py            # 51 sensor entities (dashboard, trips, service)
-├── binary_sensor.py     # 9 binary sensors (doors, windows, hood)
-├── lock.py              # 2 lock entities (doors, trunk)
-├── device_tracker.py    # 1 GPS tracker entity
-├── strings.json         # Config flow UI strings
-└── translations/en.json # English translations
-```
+**Never hardcode or infer file/directory structure.** Always consult the graphify knowledge graph for physical layout, god nodes, and community structure:
+- Quick query: `graphify-out/GRAPH_REPORT.md`
+- Deep query: `/graphify query "<question>"`
+- Update after structural changes: `/graphify . --update`
 
 ## Rule Files
 

@@ -1,79 +1,50 @@
 # Architecture
 
-## Component Interaction Chain
+> For physical file locations and import graph, always query `graphify-out/` — never infer from this file.
+
+## Core Triad (hyperedge — every platform depends on all three)
 
 ```
-User adds integration
-        ↓
-config_flow.py          validates credentials, creates ConfigEntry
-        ↓
-__init__.py             async_setup_entry: instantiates MyT client,
-                        creates one ToyotaDataUpdateCoordinator per vehicle,
-                        forwards setup to all platforms
-        ↓
-coordinator.py          polls Toyota API every 5 min via pytoyoda,
-                        stores results in ToyotaCoordinatorData dataclass
-        ↓
-base_entity.py          ToyotaBaseEntity(CoordinatorEntity): shared device_info,
-                        VIN-based unique_id, _attr_has_entity_name=True
-        ↓
-Platform modules        each extends ToyotaBaseEntity + HA platform entity
-  sensor.py             ToyotaSensorEntity
-  binary_sensor.py      ToyotaBinarySensor
-  lock.py               ToyotaBaseLock → ToyotaDoorsLock / ToyotaTrunkLock
-  device_tracker.py     ToyotaDeviceTracker
+ToyotaDataUpdateCoordinator  ←─── god node #1 (63 edges)
+  polls pytoyoda every 5 min
+  holds ToyotaCoordinatorData  ←── god node #3
+    .vehicle: Vehicle
+    .day/week/month/year_summary: Summary | None
+    .last_trip: Trip | None
+    .service_history: ServiceHistory | None
+
+ToyotaBaseEntity  ←───────────────── god node #2 (53 edges)
+  CoordinatorEntity[ToyotaDataUpdateCoordinator]
+  all platform entities inherit from this
+  exposes DeviceInfo grouped by VIN
 ```
 
-## Data Flow (read path)
+## Module Responsibilities
 
-1. `ToyotaDataUpdateCoordinator._async_update_data()` fires every 5 min
-2. Calls `vehicle.update()` + 6 optional `_safe_fetch()` calls
-3. Returns `ToyotaCoordinatorData` (dataclass with vehicle + summaries + trips + service)
-4. HA coordinator notifies all subscribed entities
-5. Each entity's `native_value` / `is_on` / etc. reads from `self.coordinator.data`
+- `const.py` — DOMAIN, PLATFORMS list, config keys, UPDATE_INTERVAL_MINUTES, MANUFACTURER, MODEL. No logic.
+- `coordinator.py` — `ToyotaCoordinatorData` dataclass + `ToyotaDataUpdateCoordinator`. Owns all API calls. Uses `_safe_fetch` to isolate optional data (summaries, trips) from hard failures.
+- `base_entity.py` — `ToyotaBaseEntity`. Stores `self._vin`, builds `DeviceInfo`. No platform logic.
+- `__init__.py` — Entry setup/teardown. Creates `MyT` client, logs in, fetches vehicles, builds one coordinator per vehicle, calls `async_config_entry_first_refresh`, stores list in `entry.runtime_data`. Defines `ToyotaConfigEntry` type alias.
+- `config_flow.py` — Single-step user flow (email + password). Validates by attempting login. Sets unique_id to lowercased email.
+- Platform files (`sensor`, `binary_sensor`, `lock`, `device_tracker`, `button`) — each follows the **Platform Pattern** below.
 
-## Command Flow (write path)
+## Platform Pattern
 
-1. User triggers action (lock/unlock door, set HVAC mode)
-2. Entity calls `await self.coordinator.data.vehicle.post_command(CommandType.X)`
-3. Entity sets `_is_locking / _is_unlocking` flag, writes async state
-4. `finally` block resets flag + calls `await self.coordinator.async_request_refresh()`
-5. Coordinator fetches fresh data → all entities update
+Every platform file has exactly this shape:
 
-## Key Types
+1. **Description dataclass** — `@dataclass(frozen=True, kw_only=True)` extending the HA description base, adding `value_fn: Callable[[ToyotaCoordinatorData], T]`.
+2. **Description tuple** — module-level constant, all descriptions declared inline.
+3. **Entity class** — inherits `ToyotaBaseEntity` + HA platform entity. Sets `unique_id = f"{self._vin}_{description.key}"` in `__init__`. Reads state via `self.entity_description.value_fn(self.coordinator.data)`.
+4. **`async_setup_entry`** — iterates `entry.runtime_data` (list of coordinators), creates one entity per coordinator (× description for multi-entity platforms).
 
-| Type | File | Role |
-|------|------|------|
-| `ToyotaConfigEntry` | `__init__.py` | `ConfigEntry[list[ToyotaDataUpdateCoordinator]]` type alias |
-| `ToyotaCoordinatorData` | `coordinator.py` | Dataclass holding all fetched vehicle data |
-| `ToyotaDataUpdateCoordinator` | `coordinator.py` | One instance per vehicle; owns polling lifecycle |
-| `ToyotaBaseEntity` | `base_entity.py` | Shared base for all 4 platform entity types |
-| `ToyotaSensorEntityDescription` | `sensor.py` | Extends `SensorEntityDescription` with `value_fn` callable |
+## Key Design Decisions
 
-## Entity Description Pattern
+**Climate endpoints stripped at init** (`coordinator.py:54`): Toyota's climate GET endpoints return `ONE_GLOBAL_RS_40000` (HTTP 500), which breaks `asyncio.gather()` inside `vehicle.update()`. The coordinator removes `climate_settings` and `climate_status` from `_endpoint_collect` once at init rather than catching per-call.
 
-Entities are defined declaratively as tuples of description dataclasses:
+**`_safe_fetch` pattern**: Optional data (summaries, trips, service history) is fetched via `_safe_fetch(coro_fn, label)` which returns `None` on any exception and logs at DEBUG. Core vehicle update failure raises `UpdateFailed` or `ConfigEntryAuthFailed` instead.
 
-```python
-@dataclass(frozen=True, kw_only=True)
-class ToyotaSensorEntityDescription(SensorEntityDescription):
-    value_fn: Callable[[ToyotaCoordinatorData], Any] = lambda _: None
+**`entry.runtime_data`**: Coordinators are stored as `list[ToyotaDataUpdateCoordinator]` on the config entry. Platforms read this directly — no `hass.data` dict.
 
-_DASHBOARD_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
-    ToyotaSensorEntityDescription(
-        key="odometer",
-        name="Odometer",
-        value_fn=lambda d: d.vehicle.dashboard.odometer,
-        ...
-    ),
-)
-```
+**`pytoyoda` lazy import**: Imported inside `async_setup_entry` and `async_step_user` with `# noqa: PLC0415` to avoid HA startup failures when the package is not yet installed.
 
-Factory functions (`_make_summary_sensors()`) generate repetitive sets from a single template.
-`async_setup_entry` iterates all description tuples and instantiates entity objects.
-
-## Scaling Notes
-
-- One coordinator per vehicle; supports multiple vehicles per account
-- `PARALLEL_UPDATES = 0` on command platforms (lock) to prevent race conditions
-- Data fetching is sequential, not parallelised within a coordinator
+**Lock post-command refresh**: After `post_command()`, `async_call_later(hass, 20, _refresh_status)` schedules a refresh 20 s later to reflect the new lock state — Toyota API has a propagation delay.

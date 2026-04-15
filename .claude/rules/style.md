@@ -1,154 +1,164 @@
-# Coding Style & Principles
+# Coding Style
 
-## Naming Conventions
-
-| Target | Convention | Example |
-|--------|-----------|---------|
-| Constants | `UPPER_SNAKE_CASE` | `DOMAIN`, `UPDATE_INTERVAL_MINUTES` |
-| Module logger | `_LOGGER` (private, upper) | `_LOGGER = logging.getLogger(__name__)` |
-| Classes | `PascalCase` with `Toyota` prefix | `ToyotaBaseEntity`, `ToyotaClimate` |
-| Public methods/functions | `snake_case` | `get_vehicles()` |
-| Async methods | `async_` prefix | `async_setup_entry`, `async_lock` |
-| Private methods/attrs | `_leading_underscore` | `_vin`, `_safe_fetch`, `_is_locking` |
-| Type aliases | PascalCase (`type` syntax) | `type ToyotaConfigEntry = ...` |
-| File names | `snake_case` matching HA platform | `binary_sensor.py`, `device_tracker.py` |
-
-## Imports
-
-Always in this order, each group separated by a blank line:
-
-```python
-"""Module docstring."""
-
-from __future__ import annotations  # always first
-
-# 1. Standard library (alphabetical)
-from collections.abc import Callable
-from dataclasses import dataclass
-from datetime import timedelta
-from typing import Any
-
-# 2. Home Assistant / third-party (alphabetical)
-from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
-from homeassistant.core import HomeAssistant
-
-# 3. Local (relative, alphabetical)
-from . import ToyotaConfigEntry
-from .coordinator import ToyotaDataUpdateCoordinator
-```
-
-Lazy imports (inside `try/except` blocks to handle optional deps) must use `# noqa: PLC0415`.
-
-## Type Annotations
-
-- Modern PEP 604 union syntax: `bool | None`, `Any | None` — never `Optional[X]`
-- Modern `type` alias syntax (Python 3.12): `type ToyotaConfigEntry = ConfigEntry[...]`
-- Return types on all functions, including `-> None`
-- Use `Any` for pytoyoda model fields where types are unclear
-- Generic coordinators: `DataUpdateCoordinator[ToyotaCoordinatorData]`
-
-## Docstrings
-
-Required on every:
-- Module (first line of file, single-line OK: `"""Toyota Custom integration setup."""`)
-- Class (single-line for simple, multi-line when explaining API constraints or design decisions)
-- Public method/function
-
-Multi-line docstrings are used to explain non-obvious things: API limitations, design tradeoffs, why a command uses an unexpected enum value. Keep them factual, not verbose.
-
-## Comments
-
-- **ASCII section dividers** separate logical groups within a file:
-  ```python
-  # ---------------------------------------------------------------------------
-  # Dashboard sensors
-  # ---------------------------------------------------------------------------
-  ```
-  or shorter:
-  ```python
-  # ---- Doors (is_on = True → door is OPEN) --------------------------------
-  ```
-- Inline comments explain intent or suppress linting (`# noqa: BLE001`, `# Suppress loguru noise`)
-- No redundant comments that restate what the code says
-
-## Error Handling
-
-1. **Specific exceptions first**, generic `Exception` last
-2. **Always chain exceptions:** `raise XxxError("msg") from err`
-3. **Broad catches:** allowed only with `# noqa: BLE001`
-4. **Non-fatal fetch failures:** catch, log at `debug` level, return `None` — never raise
-5. **Fatal startup failures:** raise HA exceptions:
-   - `ConfigEntryAuthFailed` — bad credentials
-   - `ConfigEntryNotReady` — transient startup issue
-   - `UpdateFailed` — coordinator poll failure
-6. **Command failures:** log as `warning`, do not re-raise; always reset state flags in `finally`
-
-```python
-# Correct pattern for _safe_fetch
-async def _safe_fetch(self, coro_fn: Any, label: str) -> Any | None:
-    try:
-        return await coro_fn()
-    except Exception as err:  # noqa: BLE001
-        _LOGGER.debug("Could not fetch %s: %s", label, err)
-        return None
-```
-
-## Defensive Programming
-
-- Multi-level `None` guards before accessing nested attributes:
-  ```python
-  value_fn=lambda d: (
-      not d.vehicle.lock_status.doors.driver_seat.closed
-      if d.vehicle.lock_status
-      and d.vehicle.lock_status.doors
-      and d.vehicle.lock_status.doors.driver_seat
-      else None
-  )
-  ```
-- `native_value` on sensors catches `AttributeError` and `TypeError`, returns `None`
-- Safe defaults over exceptions for read-only properties (return `0`, not crash)
-
-## Architecture Patterns
-
-### Entity Descriptions as Data
-When adding new sensors/binary sensors, define them as entries in a description tuple — do NOT create new entity subclasses. Use a `value_fn: Callable[[ToyotaCoordinatorData], Any]` lambda to extract data.
-
-### Factory Functions for Repetitive Sets
-If a group of sensors shares structure across multiple time periods or positions, write a factory function (e.g., `_make_summary_sensors(period, accessor)`) rather than duplicating descriptions.
-
-### Multiple Inheritance
-All entity classes use: `class ToyotaFoo(ToyotaBaseEntity, FooEntity)` — HA platform entity last.
-
-### Coordinator Refresh After Commands
-After any `post_command()` call, always trigger:
-```python
-await self.coordinator.async_request_refresh()
-```
+Strict rules derived from the existing codebase. Follow exactly when writing new code.
 
 ## File Structure
 
-Every module follows this top-to-bottom order:
-1. Module docstring
+Every file must begin with, in order:
+1. Module docstring: `"""<One sentence describing the module>."""`
 2. `from __future__ import annotations`
-3. Imports (stdlib → HA → local)
-4. Module-level constants (`PARALLEL_UPDATES`, custom units)
-5. `_LOGGER` if needed
-6. Helper functions (private, `_` prefix)
-7. Dataclass definitions
-8. Section dividers + entity description tuples
-9. Entity class definitions
-10. `async_setup_entry()` — always last
+3. stdlib imports, then third-party, then HA (`homeassistant.*`), then local (`. import ...`)
+4. `_LOGGER = logging.getLogger(__name__)` — only when the file actually logs
 
-## Async
+## Type Annotations
 
-- All I/O (API calls, command sends, setup) must be `async`/`await`
-- Never use blocking calls (`time.sleep`, synchronous HTTP)
-- Use `await self.coordinator.async_request_refresh()` — not `coordinator.async_update()`
+- Use Python 3.12 `type` alias syntax: `type ToyotaConfigEntry = ConfigEntry[list[ToyotaDataUpdateCoordinator]]`
+- Always annotate function signatures fully, including return types
+- Use `T | None` not `Optional[T]`
+- Use `list[X]` not `List[X]`
 
-## Principles (Non-Negotiable)
+## Description Dataclasses
 
-- **No speculative abstractions.** Don't create helpers, base classes, or utilities unless they are used in at least two places right now.
-- **No scope creep.** Don't add extra sensors, options, or features beyond what was asked.
-- **Preserve HA conventions.** Follow Home Assistant integration patterns (`_attr_*` properties, entity descriptions, coordinator pattern).
-- **Match existing patterns exactly** when adding new entities. New sensors go into the appropriate description tuple; new platforms follow the same file structure as existing ones.
-- **No test infrastructure** unless explicitly requested.
+```python
+@dataclass(frozen=True, kw_only=True)
+class ToyotaXxxEntityDescription(XxxEntityDescription):
+    """Extends XxxEntityDescription with a value_fn."""
+
+    value_fn: Callable[[ToyotaCoordinatorData], SomeType] = lambda _: None
+```
+
+- Always `frozen=True, kw_only=True`
+- `value_fn` default is `lambda _: None`, never `None`
+- Description tuples are module-level constants, typed as `tuple[ToyotaXxxEntityDescription, ...]`
+
+## value_fn Lambdas
+
+Safe None-chain pattern — always guard each level:
+
+```python
+value_fn=lambda d: d.vehicle.dashboard.odometer if d.vehicle.dashboard else None,
+```
+
+For deeply nested access (lock_status), guard each intermediate:
+
+```python
+value_fn=lambda d: (
+    _closed_to_is_on(d.vehicle.lock_status.doors.driver_seat.closed)
+    if d.vehicle.lock_status and d.vehicle.lock_status.doors and d.vehicle.lock_status.doors.driver_seat
+    else None
+),
+```
+
+Never raise inside a `value_fn` lambda — the entity's `native_value`/`is_on` has a safety net but lambdas should be clean.
+
+## Entity Classes
+
+```python
+class ToyotaXxxEntity(ToyotaBaseEntity, XxxEntity):
+    """A single Toyota xxx."""
+
+    entity_description: ToyotaXxxEntityDescription
+
+    def __init__(self, coordinator: ToyotaDataUpdateCoordinator, description: ToyotaXxxEntityDescription) -> None:
+        """Initialise the xxx."""
+        super().__init__(coordinator)
+        self.entity_description = description
+        self._attr_unique_id = f"{self._vin}_{description.key}"
+```
+
+- `unique_id` always `f"{self._vin}_{description.key}"` (description-based) or `f"{self._vin}_<fixed_suffix>"` (single entities)
+- Use `_attr_translation_key` for entity names — not hardcoded strings (exception: one-off utility entities may use `_attr_name`)
+- Use `_attr_*` class attributes for static HA properties; only use instance attributes for dynamic state
+
+## State Properties (safety net)
+
+```python
+@property
+def native_value(self) -> Any:
+    """Return the sensor value, safely handling None chains."""
+    try:
+        return self.entity_description.value_fn(self.coordinator.data)
+    except (AttributeError, TypeError):
+        return None
+```
+
+Always wrap `value_fn` calls in `try/except (AttributeError, TypeError)` — never let a bad API response crash an entity update.
+
+## Error Handling
+
+```python
+# Hard failure — raise to HA
+except ToyotaLoginError as err:
+    raise ConfigEntryAuthFailed("...") from err
+
+# Soft failure — log and degrade gracefully
+except Exception as err:  # noqa: BLE001
+    _LOGGER.warning("Toyota command %s failed: %s", command, err)
+
+# Optional data — return None silently
+except Exception as err:  # noqa: BLE001
+    _LOGGER.debug("Could not fetch %s: %s", label, err)
+    return None
+```
+
+- `# noqa: BLE001` is required on every bare `except Exception` — never omit it
+- Re-raise as HA exceptions (`ConfigEntryAuthFailed`, `ConfigEntryNotReady`, `UpdateFailed`) with `from err`
+- Never swallow exceptions silently without at least a debug log
+
+## Logging
+
+- Use `%s` style formatting, never f-strings in log calls: `_LOGGER.warning("msg %s", var)`
+- DEBUG for optional data failures and diagnostic info
+- WARNING for recoverable errors that degrade functionality
+- No INFO logs — HA integrations avoid chattiness
+
+## Platform Module Constants
+
+Every platform file must have at module level, before any class definitions:
+
+```python
+PARALLEL_UPDATES = 0
+```
+
+## Deferred Imports
+
+`pytoyoda` is always imported inside the function, not at module level:
+
+```python
+from pytoyoda import MyT  # noqa: PLC0415
+from pytoyoda.exceptions import ToyotaLoginError  # noqa: PLC0415
+```
+
+`# noqa: PLC0415` is required — never suppress it or move these to module level.
+
+## Section Banners
+
+Use `# ---` banners to group related blocks in long files:
+
+```python
+# ---------------------------------------------------------------------------
+# Dashboard sensors
+# ---------------------------------------------------------------------------
+```
+
+## Comments
+
+- Comment the **why**, not the what
+- Cite API error codes when working around known bugs: `# Toyota's climate GET endpoints return ONE_GLOBAL_RS_40000 (HTTP 500)`
+- Comment semantic gotchas: `# is_on=True means OPEN (alert state), not closed`
+- No redundant inline comments restating the code
+
+## async_setup_entry Signature
+
+Always exactly:
+
+```python
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ToyotaConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    """Set up Toyota <platform> from a config entry."""
+    coordinators: list[ToyotaDataUpdateCoordinator] = entry.runtime_data
+    ...
+```
