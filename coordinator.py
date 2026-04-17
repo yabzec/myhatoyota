@@ -75,7 +75,12 @@ class ToyotaDataUpdateCoordinator(DataUpdateCoordinator[ToyotaCoordinatorData]):
         month_summary = await self._safe_fetch(self._vehicle.get_current_month_summary, "month summary")
         year_summary = await self._safe_fetch(self._vehicle.get_current_year_summary, "year summary")
         last_trip = await self._safe_fetch(self._vehicle.get_last_trip, "last trip")
-        service_history = await self._safe_fetch(self._vehicle.get_latest_service_history, "service history")
+        # get_latest_service_history is sync in pytoyoda 4.x
+        try:
+            service_history = self._vehicle.get_latest_service_history()
+        except Exception as err:  # noqa: BLE001
+            _LOGGER.debug("Could not fetch service history: %s", err)
+            service_history = None
 
         return ToyotaCoordinatorData(
             vehicle=self._vehicle,
