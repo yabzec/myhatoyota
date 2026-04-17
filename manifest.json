@@ -6,7 +6,7 @@
   "documentation": "https://github.com/pytoyoda/pytoyoda",
   "integration_type": "hub",
   "iot_class": "cloud_polling",
-  "requirements": ["pytoyoda>=4.0.0"],
+  "requirements": ["pytoyoda>=4.0.0,<5.0.0"],
   "version": "1.0.0",
   "single_config_entry": false
 }
