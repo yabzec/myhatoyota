@@ -202,7 +202,6 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
         key="last_trip_fuel_consumed",
         translation_key="last_trip_fuel_consumed",
         native_unit_of_measurement=UnitOfVolume.LITERS,
-        device_class=SensorDeviceClass.VOLUME,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:gas-station",
         value_fn=lambda d: d.last_trip.fuel_consumed if d.last_trip else None,
