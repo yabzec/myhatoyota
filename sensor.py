@@ -120,7 +120,7 @@ _DASHBOARD_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
 # Summary sensors helper
 # ---------------------------------------------------------------------------
 def _make_summary_sensors(prefix: str, label: str, attr: str) -> tuple[ToyotaSensorEntityDescription, ...]:
-    """Build 6 sensors for a given summary period."""
+    """Build 7 sensors for a given summary period."""
     return (
         ToyotaSensorEntityDescription(
             key=f"{prefix}_distance",
@@ -130,6 +130,15 @@ def _make_summary_sensors(prefix: str, label: str, attr: str) -> tuple[ToyotaSen
             state_class=SensorStateClass.MEASUREMENT,
             icon="mdi:road",
             value_fn=lambda d, a=attr: getattr(d, a).distance if getattr(d, a) else None,
+        ),
+        ToyotaSensorEntityDescription(
+            key=f"{prefix}_duration",
+            translation_key=f"{prefix}_duration",
+            native_unit_of_measurement=UnitOfTime.MINUTES,
+            device_class=SensorDeviceClass.DURATION,
+            state_class=SensorStateClass.MEASUREMENT,
+            icon="mdi:timer",
+            value_fn=lambda d, a=attr: _timedelta_to_minutes(getattr(d, a).duration) if getattr(d, a) else None,
         ),
         ToyotaSensorEntityDescription(
             key=f"{prefix}_fuel_consumed",
@@ -199,6 +208,15 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
         value_fn=lambda d: d.last_trip.distance if d.last_trip else None,
     ),
     ToyotaSensorEntityDescription(
+        key="last_trip_duration",
+        translation_key="last_trip_duration",
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        device_class=SensorDeviceClass.DURATION,
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:timer",
+        value_fn=lambda d: _timedelta_to_minutes(d.last_trip.duration) if d.last_trip else None,
+    ),
+    ToyotaSensorEntityDescription(
         key="last_trip_fuel_consumed",
         translation_key="last_trip_fuel_consumed",
         native_unit_of_measurement=UnitOfVolume.LITERS,
@@ -238,7 +256,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:star",
-        value_fn=lambda d: round(d.last_trip.score, 1) if d.last_trip else None,
+        value_fn=lambda d: round(d.last_trip.score, 1) if d.last_trip and d.last_trip.score is not None else None,
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_score_acceleration",
@@ -246,7 +264,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:car-speed-limiter",
-        value_fn=lambda d: round(d.last_trip.score_acceleration, 1) if d.last_trip else None,
+        value_fn=lambda d: round(d.last_trip.score_acceleration, 1) if d.last_trip and d.last_trip.score_acceleration is not None else None,
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_score_braking",
@@ -254,7 +272,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:car-brake-alert",
-        value_fn=lambda d: round(d.last_trip.score_braking, 1) if d.last_trip else None,
+        value_fn=lambda d: round(d.last_trip.score_braking, 1) if d.last_trip and d.last_trip.score_braking is not None else None,
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_score_advice",
@@ -262,7 +280,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:lightbulb",
-        value_fn=lambda d: round(d.last_trip.score_advice, 1) if d.last_trip else None,
+        value_fn=lambda d: round(d.last_trip.score_advice, 1) if d.last_trip and d.last_trip.score_advice is not None else None,
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_score_constant_speed",
@@ -270,7 +288,7 @@ _LAST_TRIP_SENSORS: tuple[ToyotaSensorEntityDescription, ...] = (
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:speedometer",
-        value_fn=lambda d: round(d.last_trip.score_constant_speed, 1) if d.last_trip else None,
+        value_fn=lambda d: round(d.last_trip.score_constant_speed, 1) if d.last_trip and d.last_trip.score_constant_speed is not None else None,
     ),
     ToyotaSensorEntityDescription(
         key="last_trip_start",

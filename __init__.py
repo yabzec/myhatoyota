@@ -1,6 +1,12 @@
 """Toyota Custom integration setup."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+# Prefer vendored pytoyoda (with local fixes) over any pip-installed version
+sys.path.insert(0, str(Path(__file__).parent / "_vendor"))
+
 import logging
 
 from homeassistant.config_entries import ConfigEntry

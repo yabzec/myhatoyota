@@ -1,0 +1,1129 @@
+{
+  "status": {
+    "messages": [
+      {
+        "description": "Request Completed Successfully",
+        "detailed_description": "Request Completed Successfully",
+        "response_code": "ONE-GLOBAL-RS-10000"
+      }
+    ]
+  },
+  "code": null,
+  "errors": null,
+  "message": null,
+  "payload": {
+    "vehicle_status": [
+      {
+        "category": "carstatus_category_driver",
+        "display_order": 1,
+        "sections": [
+          {
+            "section": "carstatus_item_driver_door",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              },
+              {
+                "value": "carstatus_unlocked",
+                "status": 1
+              }
+            ]
+          },
+          {
+            "section": "carstatus_item_driver_rear_door",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              },
+              {
+                "value": "carstatus_unlocked",
+                "status": 1
+              }
+            ]
+          },
+          {
+            "section": "carstatus_item_driver_rear_window",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              }
+            ]
+          },
+          {
+            "section": "carstatus_item_driver_window",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "category": "carstatus_category_passenger",
+        "display_order": 2,
+        "sections": [
+          {
+            "section": "carstatus_item_passenger_door",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              },
+              {
+                "value": "carstatus_unlocked",
+                "status": 1
+              }
+            ]
+          },
+          {
+            "section": "carstatus_item_passenger_rear_door",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              },
+              {
+                "value": "carstatus_unlocked",
+                "status": 1
+              }
+            ]
+          },
+          {
+            "section": "carstatus_item_passenger_rear_window",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              }
+            ]
+          },
+          {
+            "section": "carstatus_item_passenger_window",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "category": "carstatus_category_other",
+        "display_order": 3,
+        "sections": [
+          {
+            "section": "carstatus_item_rear_hatch",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              },
+              {
+                "value": "carstatus_unlocked",
+                "status": 1
+              }
+            ]
+          },
+          {
+            "section": "carstatus_item_hood",
+            "values": [
+              {
+                "value": "carstatus_closed",
+                "status": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "telemetry": {
+      "fugage": {
+        "unit": "%",
+        "value": 96.0
+      },
+      "rage": {
+        "unit": "Km",
+        "value": 603.0
+      },
+      "odo": {
+        "unit": "Km",
+        "value": 4636.0
+      }
+    },
+    "occurrence_date": "2026-04-17 15:16:57+00:00",
+    "caution_overall_count": 5,
+    "latitude": 45.76076,
+    "longitude": 13.364581,
+    "location_acquisition_datetime": "2026-04-17 15:16:57+00:00"
+  }
+}
+--- trip_history ---
+{
+  "status": {
+    "messages": [
+      {
+        "description": "Request completed successfully",
+        "detailed_description": "Request completed successfully",
+        "response_code": "ONE-DA-200"
+      }
+    ]
+  },
+  "code": null,
+  "errors": null,
+  "message": null,
+  "payload": {
+    "from_date": "2026-01-17",
+    "to_date": "2026-04-17",
+    "trips": [
+      {
+        "id": "3f8971ab-c181-4252-a1d9-21b04603e9de",
+        "category": 0,
+        "summary": null,
+        "scores": {
+          "global_": 64,
+          "acceleration": 62,
+          "braking": 66,
+          "advice": 1,
+          "constant_speed": null
+        },
+        "behaviours": [],
+        "hdc": {
+          "ev_time": 202,
+          "ev_distance": 824,
+          "charge_time": 75,
+          "charge_dist": 149,
+          "eco_time": 103,
+          "eco_dist": 664,
+          "power_time": 0,
+          "power_dist": 0
+        },
+        "route": null
+      }
+    ],
+    "summary": [
+      {
+        "year": 2026,
+        "month": 4,
+        "summary": null,
+        "scores": {
+          "global_": 82,
+          "acceleration": 91,
+          "braking": 72,
+          "advice": 1,
+          "constant_speed": 74
+        },
+        "hdc": {
+          "ev_time": 44935,
+          "ev_distance": 478508,
+          "charge_time": 18641,
+          "charge_dist": 170369,
+          "eco_time": 63272,
+          "eco_dist": 1168168,
+          "power_time": 3654,
+          "power_dist": 64094
+        },
+        "histograms": [
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 17,
+            "summary": null,
+            "scores": {
+              "global_": 74,
+              "acceleration": 85,
+              "braking": 63,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 888,
+              "ev_distance": 6703,
+              "charge_time": 418,
+              "charge_dist": 2526,
+              "eco_time": 1157,
+              "eco_dist": 13648,
+              "power_time": 20,
+              "power_dist": 278
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 16,
+            "summary": null,
+            "scores": {
+              "global_": 82,
+              "acceleration": 88,
+              "braking": 76,
+              "advice": 1,
+              "constant_speed": 76
+            },
+            "hdc": {
+              "ev_time": 3147,
+              "ev_distance": 34614,
+              "charge_time": 1255,
+              "charge_dist": 11929,
+              "eco_time": 4647,
+              "eco_dist": 88787,
+              "power_time": 235,
+              "power_dist": 4363
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 15,
+            "summary": null,
+            "scores": {
+              "global_": 76,
+              "acceleration": 85,
+              "braking": 65,
+              "advice": 1,
+              "constant_speed": 83
+            },
+            "hdc": {
+              "ev_time": 3105,
+              "ev_distance": 39375,
+              "charge_time": 1411,
+              "charge_dist": 16420,
+              "eco_time": 5026,
+              "eco_dist": 110760,
+              "power_time": 496,
+              "power_dist": 10026
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 13,
+            "summary": null,
+            "scores": {
+              "global_": 69,
+              "acceleration": 85,
+              "braking": 52,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 709,
+              "ev_distance": 5596,
+              "charge_time": 262,
+              "charge_dist": 2376,
+              "eco_time": 810,
+              "eco_dist": 9591,
+              "power_time": 55,
+              "power_dist": 966
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 12,
+            "summary": null,
+            "scores": {
+              "global_": 72,
+              "acceleration": 81,
+              "braking": 62,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 1880,
+              "ev_distance": 16120,
+              "charge_time": 636,
+              "charge_dist": 5007,
+              "eco_time": 1967,
+              "eco_dist": 25155,
+              "power_time": 144,
+              "power_dist": 2283
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 11,
+            "summary": null,
+            "scores": {
+              "global_": 84,
+              "acceleration": 94,
+              "braking": 73,
+              "advice": 1,
+              "constant_speed": 71
+            },
+            "hdc": {
+              "ev_time": 4248,
+              "ev_distance": 46604,
+              "charge_time": 2291,
+              "charge_dist": 23384,
+              "eco_time": 6994,
+              "eco_dist": 160519,
+              "power_time": 667,
+              "power_dist": 11016
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 10,
+            "summary": null,
+            "scores": {
+              "global_": 77,
+              "acceleration": 86,
+              "braking": 67,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 4009,
+              "ev_distance": 42295,
+              "charge_time": 1284,
+              "charge_dist": 10818,
+              "eco_time": 4660,
+              "eco_dist": 62763,
+              "power_time": 225,
+              "power_dist": 3473
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 9,
+            "summary": null,
+            "scores": {
+              "global_": 88,
+              "acceleration": 95,
+              "braking": 80,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 1404,
+              "ev_distance": 12258,
+              "charge_time": 509,
+              "charge_dist": 3289,
+              "eco_time": 1479,
+              "eco_dist": 18609,
+              "power_time": 26,
+              "power_dist": 428
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 8,
+            "summary": null,
+            "scores": {
+              "global_": 72,
+              "acceleration": 82,
+              "braking": 62,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 670,
+              "ev_distance": 5317,
+              "charge_time": 336,
+              "charge_dist": 2090,
+              "eco_time": 740,
+              "eco_dist": 9778,
+              "power_time": 32,
+              "power_dist": 564
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 6,
+            "summary": null,
+            "scores": {
+              "global_": 79,
+              "acceleration": 90,
+              "braking": 69,
+              "advice": 1,
+              "constant_speed": 85
+            },
+            "hdc": {
+              "ev_time": 3819,
+              "ev_distance": 37500,
+              "charge_time": 1681,
+              "charge_dist": 11773,
+              "eco_time": 5671,
+              "eco_dist": 113402,
+              "power_time": 281,
+              "power_dist": 5581
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 5,
+            "summary": null,
+            "scores": {
+              "global_": 76,
+              "acceleration": 85,
+              "braking": 66,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 1524,
+              "ev_distance": 13467,
+              "charge_time": 492,
+              "charge_dist": 3676,
+              "eco_time": 1738,
+              "eco_dist": 19957,
+              "power_time": 92,
+              "power_dist": 1457
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 4,
+            "summary": null,
+            "scores": {
+              "global_": 83,
+              "acceleration": 90,
+              "braking": 74,
+              "advice": 1,
+              "constant_speed": 70
+            },
+            "hdc": {
+              "ev_time": 4603,
+              "ev_distance": 50554,
+              "charge_time": 2138,
+              "charge_dist": 21679,
+              "eco_time": 7247,
+              "eco_dist": 158282,
+              "power_time": 539,
+              "power_dist": 8907
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 3,
+            "summary": null,
+            "scores": {
+              "global_": 76,
+              "acceleration": 92,
+              "braking": 59,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 2570,
+              "ev_distance": 23333,
+              "charge_time": 1002,
+              "charge_dist": 7615,
+              "eco_time": 2845,
+              "eco_dist": 37462,
+              "power_time": 97,
+              "power_dist": 1792
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 2,
+            "summary": null,
+            "scores": {
+              "global_": 88,
+              "acceleration": 96,
+              "braking": 80,
+              "advice": 1,
+              "constant_speed": 72
+            },
+            "hdc": {
+              "ev_time": 9721,
+              "ev_distance": 115768,
+              "charge_time": 4036,
+              "charge_dist": 40605,
+              "eco_time": 14758,
+              "eco_dist": 283922,
+              "power_time": 578,
+              "power_dist": 10172
+            }
+          },
+          {
+            "year": 2026,
+            "month": 4,
+            "day": 1,
+            "summary": null,
+            "scores": {
+              "global_": 79,
+              "acceleration": 89,
+              "braking": 68,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 2638,
+              "ev_distance": 29004,
+              "charge_time": 890,
+              "charge_dist": 7182,
+              "eco_time": 3533,
+              "eco_dist": 55533,
+              "power_time": 167,
+              "power_dist": 2788
+            }
+          }
+        ]
+      },
+      {
+        "year": 2026,
+        "month": 3,
+        "summary": null,
+        "scores": {
+          "global_": 79,
+          "acceleration": 90,
+          "braking": 67,
+          "advice": 1,
+          "constant_speed": 76
+        },
+        "hdc": {
+          "ev_time": 42196,
+          "ev_distance": 463514,
+          "charge_time": 16351,
+          "charge_dist": 145738,
+          "eco_time": 65641,
+          "eco_dist": 1248635,
+          "power_time": 2753,
+          "power_dist": 55388
+        },
+        "histograms": [
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 30,
+            "summary": null,
+            "scores": {
+              "global_": 78,
+              "acceleration": 89,
+              "braking": 66,
+              "advice": 1,
+              "constant_speed": 73
+            },
+            "hdc": {
+              "ev_time": 2977,
+              "ev_distance": 30227,
+              "charge_time": 1304,
+              "charge_dist": 11183,
+              "eco_time": 5111,
+              "eco_dist": 106640,
+              "power_time": 228,
+              "power_dist": 4733
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 29,
+            "summary": null,
+            "scores": {
+              "global_": 78,
+              "acceleration": 87,
+              "braking": 67,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 2205,
+              "ev_distance": 28617,
+              "charge_time": 626,
+              "charge_dist": 7151,
+              "eco_time": 3195,
+              "eco_dist": 52823,
+              "power_time": 68,
+              "power_dist": 1566
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 28,
+            "summary": null,
+            "scores": {
+              "global_": 80,
+              "acceleration": 89,
+              "braking": 70,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 3064,
+              "ev_distance": 35364,
+              "charge_time": 1077,
+              "charge_dist": 9820,
+              "eco_time": 4122,
+              "eco_dist": 65172,
+              "power_time": 128,
+              "power_dist": 2505
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 27,
+            "summary": null,
+            "scores": {
+              "global_": 75,
+              "acceleration": 84,
+              "braking": 66,
+              "advice": 5,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 1374,
+              "ev_distance": 10858,
+              "charge_time": 630,
+              "charge_dist": 3384,
+              "eco_time": 1348,
+              "eco_dist": 16569,
+              "power_time": 24,
+              "power_dist": 269
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 25,
+            "summary": null,
+            "scores": {
+              "global_": 79,
+              "acceleration": 88,
+              "braking": 70,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 1378,
+              "ev_distance": 12572,
+              "charge_time": 548,
+              "charge_dist": 3216,
+              "eco_time": 1743,
+              "eco_dist": 22317,
+              "power_time": 6,
+              "power_dist": 87
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 24,
+            "summary": null,
+            "scores": {
+              "global_": 81,
+              "acceleration": 89,
+              "braking": 71,
+              "advice": 5,
+              "constant_speed": 75
+            },
+            "hdc": {
+              "ev_time": 2193,
+              "ev_distance": 28316,
+              "charge_time": 982,
+              "charge_dist": 10113,
+              "eco_time": 4269,
+              "eco_dist": 99617,
+              "power_time": 232,
+              "power_dist": 4531
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 23,
+            "summary": null,
+            "scores": {
+              "global_": 82,
+              "acceleration": 99,
+              "braking": 64,
+              "advice": 10,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 952,
+              "ev_distance": 12215,
+              "charge_time": 264,
+              "charge_dist": 3017,
+              "eco_time": 1366,
+              "eco_dist": 21363,
+              "power_time": 11,
+              "power_dist": 180
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 22,
+            "summary": null,
+            "scores": {
+              "global_": 85,
+              "acceleration": 95,
+              "braking": 74,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 1910,
+              "ev_distance": 18699,
+              "charge_time": 714,
+              "charge_dist": 5638,
+              "eco_time": 2355,
+              "eco_dist": 32865,
+              "power_time": 66,
+              "power_dist": 1065
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 19,
+            "summary": null,
+            "scores": {
+              "global_": 77,
+              "acceleration": 90,
+              "braking": 63,
+              "advice": 16,
+              "constant_speed": 84
+            },
+            "hdc": {
+              "ev_time": 2408,
+              "ev_distance": 29113,
+              "charge_time": 794,
+              "charge_dist": 8931,
+              "eco_time": 4182,
+              "eco_dist": 83255,
+              "power_time": 150,
+              "power_dist": 3097
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 18,
+            "summary": null,
+            "scores": {
+              "global_": 77,
+              "acceleration": 90,
+              "braking": 63,
+              "advice": 5,
+              "constant_speed": 78
+            },
+            "hdc": {
+              "ev_time": 2003,
+              "ev_distance": 25831,
+              "charge_time": 821,
+              "charge_dist": 10230,
+              "eco_time": 4233,
+              "eco_dist": 95900,
+              "power_time": 240,
+              "power_dist": 5083
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 17,
+            "summary": null,
+            "scores": {
+              "global_": 80,
+              "acceleration": 92,
+              "braking": 67,
+              "advice": 5,
+              "constant_speed": 75
+            },
+            "hdc": {
+              "ev_time": 2491,
+              "ev_distance": 29766,
+              "charge_time": 1161,
+              "charge_dist": 12120,
+              "eco_time": 4564,
+              "eco_dist": 101843,
+              "power_time": 214,
+              "power_dist": 4970
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 16,
+            "summary": null,
+            "scores": {
+              "global_": 79,
+              "acceleration": 93,
+              "braking": 63,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 2002,
+              "ev_distance": 19321,
+              "charge_time": 553,
+              "charge_dist": 4317,
+              "eco_time": 2496,
+              "eco_dist": 31939,
+              "power_time": 60,
+              "power_dist": 1105
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 15,
+            "summary": null,
+            "scores": {
+              "global_": 82,
+              "acceleration": 87,
+              "braking": 78,
+              "advice": 1,
+              "constant_speed": 79
+            },
+            "hdc": {
+              "ev_time": 1217,
+              "ev_distance": 9793,
+              "charge_time": 695,
+              "charge_dist": 4193,
+              "eco_time": 3161,
+              "eco_dist": 91468,
+              "power_time": 96,
+              "power_dist": 2574
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 12,
+            "summary": null,
+            "scores": {
+              "global_": 81,
+              "acceleration": 90,
+              "braking": 71,
+              "advice": 10,
+              "constant_speed": 74
+            },
+            "hdc": {
+              "ev_time": 1851,
+              "ev_distance": 19686,
+              "charge_time": 944,
+              "charge_dist": 7268,
+              "eco_time": 4050,
+              "eco_dist": 107606,
+              "power_time": 147,
+              "power_dist": 2662
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 11,
+            "summary": null,
+            "scores": {
+              "global_": 69,
+              "acceleration": 88,
+              "braking": 50,
+              "advice": 5,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 1117,
+              "ev_distance": 13056,
+              "charge_time": 427,
+              "charge_dist": 5103,
+              "eco_time": 1683,
+              "eco_dist": 27751,
+              "power_time": 147,
+              "power_dist": 2809
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 9,
+            "summary": null,
+            "scores": {
+              "global_": 77,
+              "acceleration": 89,
+              "braking": 66,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 3516,
+              "ev_distance": 38247,
+              "charge_time": 1258,
+              "charge_dist": 9212,
+              "eco_time": 4257,
+              "eco_dist": 67416,
+              "power_time": 220,
+              "power_dist": 3966
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 8,
+            "summary": null,
+            "scores": {
+              "global_": 79,
+              "acceleration": 91,
+              "braking": 67,
+              "advice": 10,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 876,
+              "ev_distance": 10525,
+              "charge_time": 318,
+              "charge_dist": 1904,
+              "eco_time": 1293,
+              "eco_dist": 21632,
+              "power_time": 67,
+              "power_dist": 1256
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 7,
+            "summary": null,
+            "scores": {
+              "global_": 82,
+              "acceleration": 95,
+              "braking": 68,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 3307,
+              "ev_distance": 36973,
+              "charge_time": 932,
+              "charge_dist": 8753,
+              "eco_time": 4357,
+              "eco_dist": 62784,
+              "power_time": 133,
+              "power_dist": 2285
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 5,
+            "summary": null,
+            "scores": {
+              "global_": 91,
+              "acceleration": 100,
+              "braking": 82,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 212,
+              "ev_distance": 985,
+              "charge_time": 142,
+              "charge_dist": 653,
+              "eco_time": 276,
+              "eco_dist": 1645,
+              "power_time": 0,
+              "power_dist": 0
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 4,
+            "summary": null,
+            "scores": {
+              "global_": 78,
+              "acceleration": 88,
+              "braking": 68,
+              "advice": 1,
+              "constant_speed": 76
+            },
+            "hdc": {
+              "ev_time": 2645,
+              "ev_distance": 28988,
+              "charge_time": 1122,
+              "charge_dist": 12108,
+              "eco_time": 4628,
+              "eco_dist": 98108,
+              "power_time": 367,
+              "power_dist": 8091
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 2,
+            "summary": null,
+            "scores": {
+              "global_": 75,
+              "acceleration": 86,
+              "braking": 64,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 1578,
+              "ev_distance": 14813,
+              "charge_time": 626,
+              "charge_dist": 4258,
+              "eco_time": 1892,
+              "eco_dist": 23843,
+              "power_time": 48,
+              "power_dist": 831
+            }
+          },
+          {
+            "year": 2026,
+            "month": 3,
+            "day": 1,
+            "summary": null,
+            "scores": {
+              "global_": 65,
+              "acceleration": 84,
+              "braking": 45,
+              "advice": 1,
+              "constant_speed": null
+            },
+            "hdc": {
+              "ev_time": 920,
+              "ev_distance": 9549,
+              "charge_time": 413,
+              "charge_dist": 3166,
+              "eco_time": 1060,
+              "eco_dist": 16079,
+              "power_time": 101,
+              "power_dist": 1723
+            }
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "pagination": {
+        "limit": 1,
+        "offset": 0,
+        "previous_offset": null,
+        "next_offset": 1,
+        "current_page": 1,
+        "total_count": 214,
+        "page_count": 214
+      },
+      "sorted_by": [
+        {
+          "field": "summary.start.ts",
+          "order": "DESC"
+        }
+      ]
+    },
+    "route": null
+  }
+}

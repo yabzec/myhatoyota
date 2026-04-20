@@ -56,6 +56,11 @@ class ToyotaDataUpdateCoordinator(DataUpdateCoordinator[ToyotaCoordinatorData]):
             for name, fn in self._vehicle._endpoint_collect  # noqa: SLF001
             if name not in {"climate_settings", "climate_status"}
         ]
+        _LOGGER.debug(
+            "Vehicle %s will poll endpoints: %s",
+            vehicle.vin,
+            [name for name, _ in self._vehicle._endpoint_collect],  # noqa: SLF001
+        )
 
     async def _async_update_data(self) -> ToyotaCoordinatorData:
         """Fetch all data from the Toyota API."""
@@ -75,7 +80,7 @@ class ToyotaDataUpdateCoordinator(DataUpdateCoordinator[ToyotaCoordinatorData]):
         month_summary = await self._safe_fetch(self._vehicle.get_current_month_summary, "month summary")
         year_summary = await self._safe_fetch(self._vehicle.get_current_year_summary, "year summary")
         last_trip = await self._safe_fetch(self._vehicle.get_last_trip, "last trip")
-        # get_latest_service_history is sync in pytoyoda 4.x
+        # get_latest_service_history reads from already-fetched _endpoint_data — it is sync in pytoyoda 4.x
         try:
             service_history = self._vehicle.get_latest_service_history()
         except Exception as err:  # noqa: BLE001
@@ -97,5 +102,5 @@ class ToyotaDataUpdateCoordinator(DataUpdateCoordinator[ToyotaCoordinatorData]):
         try:
             return await coro_fn()
         except Exception as err:  # noqa: BLE001
-            _LOGGER.debug("Could not fetch %s: %s", label, err)
+            _LOGGER.warning("Could not fetch %s: %s", label, err)
             return None

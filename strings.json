@@ -18,5 +18,14 @@
     "abort": {
       "already_configured": "This Toyota account is already configured."
     }
+  },
+  "entity": {
+    "sensor": {
+      "day_duration": { "name": "Today Duration" },
+      "week_duration": { "name": "This Week Duration" },
+      "month_duration": { "name": "This Month Duration" },
+      "year_duration": { "name": "This Year Duration" },
+      "last_trip_duration": { "name": "Last Trip Duration" }
+    }
   }
 }

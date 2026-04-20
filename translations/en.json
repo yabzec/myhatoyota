@@ -50,6 +50,9 @@
       "day_distance": {
         "name": "Today Distance"
       },
+      "day_duration": {
+        "name": "Today Duration"
+      },
       "day_fuel_consumed": {
         "name": "Today Fuel Consumed"
       },
@@ -67,6 +70,9 @@
       },
       "week_distance": {
         "name": "This Week Distance"
+      },
+      "week_duration": {
+        "name": "This Week Duration"
       },
       "week_fuel_consumed": {
         "name": "This Week Fuel Consumed"
@@ -86,6 +92,9 @@
       "month_distance": {
         "name": "This Month Distance"
       },
+      "month_duration": {
+        "name": "This Month Duration"
+      },
       "month_fuel_consumed": {
         "name": "This Month Fuel Consumed"
       },
@@ -104,6 +113,9 @@
       "year_distance": {
         "name": "This Year Distance"
       },
+      "year_duration": {
+        "name": "This Year Duration"
+      },
       "year_fuel_consumed": {
         "name": "This Year Fuel Consumed"
       },
@@ -121,6 +133,9 @@
       },
       "last_trip_distance": {
         "name": "Last Trip Distance"
+      },
+      "last_trip_duration": {
+        "name": "Last Trip Duration"
       },
       "last_trip_fuel_consumed": {
         "name": "Last Trip Fuel Consumed"
